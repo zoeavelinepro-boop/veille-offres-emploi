@@ -1,0 +1,5 @@
+{
+  "_note": "Tenu à jour par la tâche planifiée de notation. 'fichiers_traites' : fichiers entièrement notés. 'en_cours' : fichier commencé et nombre d'offres déjà traitées.",
+  "fichiers_traites": [],
+  "en_cours": {}
+}

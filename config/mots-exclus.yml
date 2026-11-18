@@ -1,0 +1,24 @@
+# Pré-tri sur l'intitulé : offres écartées dès la collecte, avant toute notation (lu par veille/lecture_config.py).
+# La revue mensuelle (tâche planifiée « Revue mensuelle des offres exclues ») propose de nouvelles expressions à ajouter ici.
+#
+# Au départ (06/11/2026), seuls les stages et les alternances sont exclus d'office. À compléter
+# après une semaine d'utilisation, d'après les intitulés hors cible vus dans la notation
+# (lignes « tri_rapide » du journal) et data/etat/offres_ecartees_AAAA-MM.csv.
+# Les missions en freelance ne sont pas exclues : Zoé les accepte.
+#
+# 1. motifs_titre : expressions régulières (insensibles à la casse) appliquées à l'intitulé brut.
+#    Exemple : '\bstages?\b' (stage, stages).
+# 2. expressions : mots ou groupes de mots entiers, appliqués à l'intitulé en minuscules, sans accents,
+#    apostrophes et tirets remplacés par des espaces (écrire « charge d etudes », pas « chargé d'études »).
+
+motifs_titre:
+  # Stages (« early stage » et « late stage », vocabulaire des startups, ne sont pas des stages)
+  - '(?<!early[- ])(?<!late[- ])\bstages?\b'
+  - '\bstagiaires?\b'
+  - '\bintern(ship)?s?\b'
+  # Alternance et apprentissage
+  - '\balternan(ce|t|te|ts|tes)\b'
+  - '\bapprenti(e|s|es|ssage)?\b'
+  - '\bwork[- ]study\b'
+
+expressions: []

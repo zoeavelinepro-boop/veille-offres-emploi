@@ -1,0 +1,158 @@
+# Mots-clés de recherche de la veille (lus par veille/lecture_config.py).
+# Un mot-clé par ligne : `terme` est envoyé tel quel aux moteurs de recherche ;
+# `langue` vaut `fr` (envoyé aussi à France Travail, API francophone) ou `en`
+# (termes anglais, inexistants sur France Travail). Indeed, LinkedIn, Welcome to
+# the Jungle et FashionJobs reçoivent tous les termes ; Hellowork seulement les
+# termes français ; BoF Careers seulement les termes anglais.
+#
+# Liste de Zoé (06/11/2026), rangée par catégorie. Le filtre de titre ne garde
+# que les offres dont l'intitulé contient tous les mots d'un terme et ne confond
+# pas masculin et féminin : chaque intitulé « Directrice … » ou « Consultante … »
+# a donc aussi sa forme masculine.
+#
+# IMPORTANT — ces recherches ne sont pas exactes.
+# Chaque moteur (Indeed, LinkedIn, France Travail, Algolia) tokenise le terme et
+# applique sa propre logique de correspondance (radicaux, synonymes, classement).
+# Conséquences pratiques :
+#   - les moteurs ignorent généralement les mots vides courts (le, la, de, du, des, à, en…) ;
+#   - le pluriel et le singulier sont généralement unifiés ;
+#   - le masculin et le féminin ne sont généralement pas unifiés ;
+#   - les acronymes (CEO, COO, CSO, RSE, ESG) ne sont généralement pas unifiés avec la version longue ;
+#   - les accents sont généralement ignorés.
+
+recherches:
+
+  # --- Direction de collection & développement produit ---
+  - {terme: "Directrice de collection", langue: fr}
+  - {terme: "Directeur de collection", langue: fr}
+  - {terme: "Collection Director", langue: en}
+  - {terme: "Head of Collections", langue: en}
+  - {terme: "Directrice produit", langue: fr}
+  - {terme: "Directeur produit", langue: fr}
+  - {terme: "Product Director", langue: en}
+  - {terme: "Directrice développement produit", langue: fr}
+  - {terme: "Directeur développement produit", langue: fr}
+  - {terme: "Product Development Director", langue: en}
+  - {terme: "Directrice de l'offre", langue: fr}
+  - {terme: "Directeur de l'offre", langue: fr}
+  - {terme: "Head of Product Offering", langue: en}
+  - {terme: "Responsable de collection", langue: fr}
+  - {terme: "Collection Manager", langue: en}
+  - {terme: "Responsable développement produit", langue: fr}
+  - {terme: "Product Development Manager", langue: en}
+  - {terme: "Responsable de gamme", langue: fr}
+  - {terme: "Range Manager", langue: en}
+  - {terme: "Responsable de ligne", langue: fr}
+  - {terme: "Product Line Manager", langue: en}
+  - {terme: "Directrice textile", langue: fr}
+  - {terme: "Directeur textile", langue: fr}
+  - {terme: "Head of Apparel", langue: en}
+  - {terme: "Head of Product", langue: en}
+  - {terme: "Head of Collection Development", langue: en}
+  - {terme: "Collection & Product Development Consultant", langue: en}
+
+  # --- Direction de création & direction de style ---
+  - {terme: "Directrice de création", langue: fr}
+  - {terme: "Directeur de création", langue: fr}
+  - {terme: "Creative Director", langue: en}
+  - {terme: "Directrice de style", langue: fr}
+  - {terme: "Directeur de style", langue: fr}
+  - {terme: "Style Director", langue: en}
+  - {terme: "Directrice artistique mode", langue: fr}
+  - {terme: "Directeur artistique mode", langue: fr}
+  - {terme: "Fashion Art Director", langue: en}
+  - {terme: "Directrice du studio de création", langue: fr}
+  - {terme: "Directeur du studio de création", langue: fr}
+  - {terme: "Head of Design Studio", langue: en}
+  - {terme: "Directrice design", langue: fr}
+  - {terme: "Directeur design", langue: fr}
+  - {terme: "Design Director", langue: en}
+  - {terme: "Head of Design", langue: en}
+  - {terme: "Head of Fashion Design", langue: en}
+  - {terme: "Responsable de style", langue: fr}
+  - {terme: "Head of Style", langue: en}
+  - {terme: "Responsable bureau de style", langue: fr}
+  - {terme: "Responsable studio de création", langue: fr}
+  - {terme: "Lead Designer", langue: en}
+  - {terme: "Lead Fashion Designer", langue: en}
+  - {terme: "Senior Fashion Designer", langue: en}
+  - {terme: "Styliste senior", langue: fr}
+  - {terme: "Senior Stylist", langue: en}
+  - {terme: "Styliste prêt-à-porter", langue: fr}
+  - {terme: "Fashion Designer", langue: en}
+  - {terme: "Styliste textile", langue: fr}
+  - {terme: "Apparel Designer", langue: en}
+  - {terme: "Consultante direction créative", langue: fr}
+  - {terme: "Consultant direction créative", langue: fr}
+  - {terme: "Creative Consultant", langue: en}
+
+  # --- Direction de marque & stratégie de marque ---
+  - {terme: "Directrice de marque", langue: fr}
+  - {terme: "Directeur de marque", langue: fr}
+  - {terme: "Brand Director", langue: en}
+  - {terme: "Head of Brand", langue: en}
+  - {terme: "Directrice stratégie de marque", langue: fr}
+  - {terme: "Directeur stratégie de marque", langue: fr}
+  - {terme: "Brand Strategy Director", langue: en}
+  - {terme: "Directrice identité de marque", langue: fr}
+  - {terme: "Directeur identité de marque", langue: fr}
+  - {terme: "Brand Identity Director", langue: en}
+  - {terme: "Directrice image de marque", langue: fr}
+  - {terme: "Directeur image de marque", langue: fr}
+  - {terme: "Brand Image Director", langue: en}
+  - {terme: "Directrice marque & produit", langue: fr}
+  - {terme: "Directeur marque & produit", langue: fr}
+  - {terme: "Brand & Product Director", langue: en}
+  - {terme: "Brand & Creative Director", langue: en}
+  - {terme: "Responsable de marque", langue: fr}
+  - {terme: "Brand Manager", langue: en}
+  - {terme: "Senior Brand Manager", langue: en}
+  - {terme: "Brand Development Director", langue: en}
+  - {terme: "Head of Brand Development", langue: en}
+  - {terme: "Brand Experience Director", langue: en}
+  - {terme: "Brand Consultant", langue: en}
+  - {terme: "Brand Strategist", langue: en}
+
+  # --- Développement de nouvelles marques & nouveaux projets ---
+  - {terme: "Directrice lancement de marque", langue: fr}
+  - {terme: "Directeur lancement de marque", langue: fr}
+  - {terme: "Brand Launch Director", langue: en}
+  - {terme: "Head of New Brands", langue: en}
+  - {terme: "New Business Director", langue: en}
+  - {terme: "New Ventures Manager", langue: en}
+  - {terme: "Brand Incubation Manager", langue: en}
+  - {terme: "Directrice innovation produit", langue: fr}
+  - {terme: "Directeur innovation produit", langue: fr}
+  - {terme: "Product Innovation Director", langue: en}
+  - {terme: "Responsable nouveaux concepts", langue: fr}
+  - {terme: "New Concepts Manager", langue: en}
+  - {terme: "Responsable développement de collections capsules", langue: fr}
+  - {terme: "Directrice projets spéciaux", langue: fr}
+  - {terme: "Directeur projets spéciaux", langue: fr}
+  - {terme: "Special Projects Director", langue: en}
+  - {terme: "Head of Collaborations", langue: en}
+  - {terme: "Responsable collaborations & partenariats créatifs", langue: fr}
+  - {terme: "Creative Project Director", langue: en}
+
+  # --- Direction artistique, image & communication ---
+  - {terme: "Directrice artistique", langue: fr}
+  - {terme: "Directeur artistique", langue: fr}
+  - {terme: "Art Director", langue: en}
+  - {terme: "Directrice de l'image", langue: fr}
+  - {terme: "Directeur de l'image", langue: fr}
+  - {terme: "Image Director", langue: en}
+  - {terme: "Head of Brand Image", langue: en}
+  - {terme: "Creative Lead", langue: en}
+  - {terme: "Directrice de communication créative", langue: fr}
+  - {terme: "Directeur de communication créative", langue: fr}
+  - {terme: "Creative Content Director", langue: en}
+  - {terme: "Head of Creative Content", langue: en}
+  - {terme: "Directrice de campagne", langue: fr}
+  - {terme: "Directeur de campagne", langue: fr}
+  - {terme: "Campaign Creative Director", langue: en}
+  - {terme: "Brand Content Director", langue: en}
+  - {terme: "Directrice storytelling de marque", langue: fr}
+  - {terme: "Directeur storytelling de marque", langue: fr}
+  - {terme: "Creative Strategist", langue: en}
+  - {terme: "Directrice de l'expérience de marque", langue: fr}
+  - {terme: "Directeur de l'expérience de marque", langue: fr}

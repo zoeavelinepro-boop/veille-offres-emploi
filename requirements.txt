@@ -1,0 +1,8 @@
+# Versions figées (celles du run réussi du 22/10/2026) : une mise à jour
+# d'une bibliothèque ne doit pas casser la collecte sans prévenir.
+# Pour monter de version : modifier ici, lancer le workflow à la main, vérifier.
+python-jobspy==1.4.0
+requests==2.34.2
+pandas==3.0.6
+beautifulsoup4==4.15.0
+pyyaml==6.0.3

@@ -1,0 +1,65 @@
+# Sources interrogées et réglages de la collecte (lu par veille/lecture_config.py).
+#
+# actif: false retire une source de la collecte sans toucher au code : elle n'est
+# plus appelée, ne figure plus au bilan et ne déclenche plus d'alerte.
+# La liste des sources et leur méthode sont décrites dans le README.
+
+sources:
+  indeed: {actif: true}
+  linkedin: {actif: true}
+  france_travail: {actif: true}
+  wttj: {actif: true}
+  hellowork: {actif: true}
+  fashionjobs: {actif: true}
+  bof: {actif: true}
+  fashionunited: {actif: true}
+  profilculture: {actif: true}
+  sportyjob: {actif: true}
+  michaelpage: {actif: true}
+  fashionpersonnel: {actif: true}
+  drapers: {actif: true}
+  ifyoucould: {actif: true}
+  creativeboom: {actif: true}
+  dribbble: {actif: true}
+
+# Alerte par e-mail (échec du lancement GitHub) : seulement si une panne dure
+# ou touche plusieurs sources ; sinon simple avertissement dans le résumé du run.
+alertes:
+  nb_sources_en_echec: 3      # au moins ce nombre de sources en échec sur le même run
+  panne_heures: 24            # ou une source sans succès depuis plus de ce nombre d'heures
+
+# Dates et fenêtres (jours, sauf mention contraire).
+collecte:
+  fenetre_dedoublonnage_jours: 30   # offres (intitulé, recruteur) déjà vues : non reproposées
+  chevauchement_heures: 1           # marge de rattrapage avec le dernier succès d'une source
+  fenetre_defaut_jours: 2           # fenêtre si l'état de la source est absent ou corrompu
+  max_description_caracteres: 10000  # longueur maximale d'une description enregistrée (le début du texte est gardé)
+
+# Indeed et LinkedIn (JobSpy) : zones de recherche.
+jobspy:
+  zone_paris: "Paris, France"
+  zone_teletravail: "France"        # 2e passage : offres 100 % télétravail
+
+# Plafonds de volume, source par source. Chaque fois qu'un plafond coupe une collecte,
+# le bilan du run l'indique (colonne « Plafond » ; fichier data/etat/bilan_dernier_passage.json).
+#   resultats_par_recherche : nombre maximal de résultats par mot-clé (Indeed, LinkedIn, API à moteur)
+#   max_pages               : nombre maximal de pages de liste lues (sources sans moteur de recherche)
+#   max_details             : nombre maximal de pages d'offre ouvertes pour lire la description
+# Valeurs initiales = celles qui étaient codées en dur. À ajuster d'après le bilan (voir README).
+plafonds:
+  indeed: {resultats_par_recherche: 20}
+  linkedin: {resultats_par_recherche: 20}
+  france_travail: {resultats_par_recherche: 50}
+  wttj: {resultats_par_recherche: 50}
+  hellowork: {max_details: 150}
+  fashionjobs: {max_details: 120}
+  bof: {max_details: 120}
+  fashionunited: {max_pages: 5, max_details: 60}
+  profilculture: {max_pages: 5, max_details: 60}
+  sportyjob: {max_pages: 10}
+  michaelpage: {max_details: 80}
+  fashionpersonnel: {max_pages: 5, max_details: 60}
+  drapers: {max_pages: 5, max_details: 60}
+  ifyoucould: {max_details: 40}
+  creativeboom: {max_pages: 4, max_details: 40}
+  dribbble: {max_details: 30}

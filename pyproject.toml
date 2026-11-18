@@ -1,0 +1,10 @@
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+src = ["src"]
+line-length = 140
+
+[tool.ruff.lint]
+select = ["F"]   # erreurs de programmation (noms non définis, imports inutiles…)
