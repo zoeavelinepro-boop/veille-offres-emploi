@@ -1,0 +1,139 @@
+# .github/workflows/collecte-quotidienne.yml
+#
+# 1. Scrape les offres (réseau ouvert GitHub)
+# 2. Retire les offres qui ne sont plus en ligne (veille/exclusion_offres_fermees.py)
+# 3. Commit le JSON dans le repo
+# 4. Échoue (→ e-mail GitHub) seulement si une panne dure ou touche plusieurs sources
+# La notation est faite à part par une tâche planifiée Claude.
+# Chaque recherche couvre à la fois Paris et le 100 % télétravail en France.
+# Lancement manuel possible depuis l'onglet Actions → Run workflow.
+
+name: Collecte quotidienne
+
+on:
+  schedule:
+    # 7h00 heure de Paris toute l'année. GitHub ne connaît que l'heure UTC :
+    # on programme les deux créneaux possibles et l'étape "Heure de Paris"
+    # ne garde que celui qui tombe à 7h selon la saison.
+    # GitHub démarre souvent les tâches programmées avec retard (jusqu'à
+    # plusieurs heures à l'heure pile) : la notation de 16 h 52 garde la marge.
+    - cron: '0 5 * * *'    # 7h Paris en heure d'été (UTC+2)
+    - cron: '0 6 * * *'    # 7h Paris en heure d'hiver (UTC+1)
+  workflow_dispatch:         # lancement manuel depuis l'onglet Actions
+
+permissions:
+  contents: write
+
+# Jamais deux recherches en même temps : la 2e attend la fin de la 1re.
+concurrency:
+  group: collecte-quotidienne
+  cancel-in-progress: false
+
+env:
+  PYTHONPATH: src     # le code est dans src/veille/
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    # 60 min : la collecte prend 20 à 35 min, la vérification en ligne 1 à
+    # 10 min (plafonnée par VERIF_BUDGET_MINUTES dans veille/exclusion_offres_fermees.py).
+    timeout-minutes: 180
+
+    steps:
+      - name: Heure de Paris
+        id: gate
+        run: |
+          OFFSET=$(TZ=Europe/Paris date +%z)   # +0200 en été, +0100 en hiver
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            RUN=true
+          elif [ "${{ github.event.schedule }}" = "0 5 * * *" ] && [ "$OFFSET" = "+0200" ]; then
+            RUN=true
+          elif [ "${{ github.event.schedule }}" = "0 6 * * *" ] && [ "$OFFSET" = "+0100" ]; then
+            RUN=true
+          else
+            RUN=false
+            echo "Créneau hors saison (décalage Paris $OFFSET) : rien à faire."
+          fi
+          echo "run=$RUN" >> "$GITHUB_OUTPUT"
+
+      # Dernier état de la branche, pas celui du déclenchement : un run mis en
+      # attente derrière un autre (concurrency) doit repartir des dates de
+      # dernier succès que ce dernier vient de commiter, sinon son commit
+      # entre en conflit avec le sien et le run échoue (cas du 29/10/2026).
+      - uses: actions/checkout@v6
+        if: steps.gate.outputs.run == 'true'
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-python@v6
+        if: steps.gate.outputs.run == 'true'
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        if: steps.gate.outputs.run == 'true'
+        run: pip install -r requirements.txt
+
+      # Le script écrit dans $GITHUB_OUTPUT : out_file, count, failed_sources.
+      - name: Run scraper
+        id: scrape
+        if: steps.gate.outputs.run == 'true'
+        env:
+          FT_CLIENT_ID: ${{ secrets.FT_CLIENT_ID }}
+          FT_CLIENT_SECRET: ${{ secrets.FT_CLIENT_SECRET }}
+        run: python -m veille.collecte_quotidienne
+
+      # Retire du fichier les offres déjà fermées. Si la vérification plante,
+      # on garde le fichier tel quel plutôt que de bloquer la notation.
+      - name: Check offers still online
+        id: verif
+        if: steps.gate.outputs.run == 'true' && steps.scrape.outputs.out_file != ''
+        continue-on-error: true
+        env:
+          FT_CLIENT_ID: ${{ secrets.FT_CLIENT_ID }}
+          FT_CLIENT_SECRET: ${{ secrets.FT_CLIENT_SECRET }}
+        run: python -m veille.exclusion_offres_fermees --fichier "${{ steps.scrape.outputs.out_file }}"
+
+      - name: Final file
+        id: final
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          echo "out_file=${{ steps.verif.outputs.out_file || steps.scrape.outputs.out_file }}" >> "$GITHUB_OUTPUT"
+          echo "count=${{ steps.verif.outputs.count || steps.scrape.outputs.count }}" >> "$GITHUB_OUTPUT"
+
+      # Toujours commiter data/ (dossiers offres/ et etat/) : le fichier d'offres, mais aussi le bilan
+      # (bilan_dernier_passage.json) et les dates de dernier succès par source.
+      - name: Commit raw data
+        if: steps.gate.outputs.run == 'true' && steps.final.outputs.out_file != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git commit -m "data: scrape $(date -u +%F) — ${{ steps.final.outputs.count }} offres"
+          # Récupère d'abord les éventuels commits poussés pendant le run.
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push
+
+      # La notation n'est pas déclenchée d'ici : une tâche planifiée Claude
+      # (« Notation veille offres emploi », chaque jour à 16 h 52, heure de Paris)
+      # note les fichiers de data/offres/ pas encore notés (data/notation/fichiers_notes.json),
+      # en appliquant les consignes de la tâche planifiée « Notation veille offres emploi ».
+
+      # --- Alerte : seulement si la panne dure ou touche plusieurs sources ---
+      # Les offres des autres sources sont déjà enregistrées (elles seront notées
+      # par la tâche planifiée). Une panne isolée et récente reste un simple
+      # avertissement visible dans le résumé du run (le run reste vert) ; le run
+      # n'échoue (e-mail GitHub) que si au moins 3 sources sont en échec, ou si
+      # une source ne fonctionne plus depuis plus de 24 h (seuils dans
+      # config/sources.yml, section alertes). Détail dans le résumé
+      # du run et dans data/etat/bilan_dernier_passage.json.
+      - name: Warn on failed sources
+        if: steps.gate.outputs.run == 'true' && steps.scrape.outputs.failed_sources != '' && steps.scrape.outputs.alert_sources == ''
+        run: |
+          echo "::warning::Sources en échec (panne récente, rattrapage au prochain run) : ${{ steps.scrape.outputs.failed_sources }}"
+
+      - name: Alert on failed sources
+        if: steps.gate.outputs.run == 'true' && steps.scrape.outputs.alert_sources != ''
+        run: |
+          echo "::error::Sources en échec à signaler : ${{ steps.scrape.outputs.alert_sources }} — voir data/etat/bilan_dernier_passage.json"
+          exit 1
