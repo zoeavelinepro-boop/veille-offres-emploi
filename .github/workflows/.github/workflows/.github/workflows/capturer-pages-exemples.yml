@@ -1,0 +1,36 @@
+# Enregistre quelques vraies réponses de chaque plateforme dans tests/pages_exemples/
+# pour que les tests s'exécutent sans réseau (lancement manuel : Actions → Run workflow).
+name: Capturer les pages d'exemple
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  PYTHONPATH: src
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Capturer
+        env:
+          FT_CLIENT_ID: ${{ secrets.FT_CLIENT_ID }}
+          FT_CLIENT_SECRET: ${{ secrets.FT_CLIENT_SECRET }}
+        run: python scripts/capturer_pages_exemples.py
+      - name: Enregistrer dans le dépôt
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tests/pages_exemples
+          git diff --cached --quiet || git commit -m "tests : pages d'exemple capturées"
+          git push
