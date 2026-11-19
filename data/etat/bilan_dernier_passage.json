@@ -1,38 +1,38 @@
 {
-  "run_utc": "2026-11-18T14:45:56.356428+00:00",
-  "fichier": "data/offres/offres_2026-11-18.json",
-  "offres_ecrites": 146,
+  "run_utc": "2026-11-19T06:53:51.055621+00:00",
+  "fichier": "data/offres/offres_2026-11-19.json",
+  "offres_ecrites": 18,
   "sources_en_echec": [
     "france_travail"
   ],
   "sources_a_alerter": [
     "france_travail"
   ],
-  "pre_tri_exclues": 96,
-  "ecartees_titre": 1296,
+  "pre_tri_exclues": 58,
+  "ecartees_titre": 838,
   "sources": {
     "indeed": {
       "requetes": 250,
       "erreurs": 0,
-      "offres": 1169,
+      "offres": 648,
       "echec_total": false,
       "note": "",
       "titres_examines": 0,
       "titres_retenus": 0,
-      "ecartees_titre": 367,
-      "plafonds": 31,
+      "ecartees_titre": 223,
+      "plafonds": 16,
       "plafond_detail": "'Directrice produit' (Paris) : 20 résultats"
     },
     "linkedin": {
       "requetes": 250,
       "erreurs": 0,
-      "offres": 4285,
+      "offres": 3819,
       "echec_total": false,
       "note": "",
       "titres_examines": 0,
       "titres_retenus": 0,
-      "ecartees_titre": 706,
-      "plafonds": 203,
+      "ecartees_titre": 546,
+      "plafonds": 153,
       "plafond_detail": "'Directrice de collection' (Paris) : 20 résultats"
     },
     "france_travail": {
@@ -50,13 +50,13 @@
     "wttj": {
       "requetes": 125,
       "erreurs": 0,
-      "offres": 822,
+      "offres": 2215,
       "echec_total": false,
       "note": "",
       "titres_examines": 0,
       "titres_retenus": 0,
       "ecartees_titre": 0,
-      "plafonds": 6,
+      "plafonds": 21,
       "plafond_detail": "'Directrice produit' : 50 résultats"
     },
     "hellowork": {
@@ -67,18 +67,18 @@
       "note": "",
       "titres_examines": 0,
       "titres_retenus": 0,
-      "ecartees_titre": 43,
+      "ecartees_titre": 21,
       "plafonds": 0,
       "plafond_detail": ""
     },
     "fashionjobs": {
       "requetes": 125,
       "erreurs": 0,
-      "offres": 1958,
+      "offres": 2008,
       "echec_total": false,
       "note": "",
-      "titres_examines": 511,
-      "titres_retenus": 19,
+      "titres_examines": 522,
+      "titres_retenus": 17,
       "ecartees_titre": 0,
       "plafonds": 0,
       "plafond_detail": ""
@@ -89,8 +89,8 @@
       "offres": 1164,
       "echec_total": false,
       "note": "",
-      "titres_examines": 480,
-      "titres_retenus": 80,
+      "titres_examines": 497,
+      "titres_retenus": 79,
       "ecartees_titre": 0,
       "plafonds": 0,
       "plafond_detail": ""
@@ -101,32 +101,32 @@
       "offres": 26,
       "echec_total": false,
       "note": "",
-      "titres_examines": 26,
+      "titres_examines": 24,
       "titres_retenus": 0,
       "ecartees_titre": 0,
       "plafonds": 0,
       "plafond_detail": ""
     },
     "profilculture": {
-      "requetes": 7,
+      "requetes": 6,
       "erreurs": 0,
-      "offres": 210,
+      "offres": 180,
       "echec_total": false,
       "note": "",
-      "titres_examines": 62,
+      "titres_examines": 25,
       "titres_retenus": 1,
       "ecartees_titre": 0,
       "plafonds": 0,
       "plafond_detail": ""
     },
     "sportyjob": {
-      "requetes": 10,
+      "requetes": 2,
       "erreurs": 0,
-      "offres": 100,
+      "offres": 20,
       "echec_total": false,
       "note": "",
-      "titres_examines": 81,
-      "titres_retenus": 0,
+      "titres_examines": 9,
+      "titres_retenus": 1,
       "ecartees_titre": 0,
       "plafonds": 0,
       "plafond_detail": ""
@@ -134,10 +134,10 @@
     "michaelpage": {
       "requetes": 19,
       "erreurs": 0,
-      "offres": 73,
+      "offres": 72,
       "echec_total": false,
       "note": "",
-      "titres_examines": 73,
+      "titres_examines": 72,
       "titres_retenus": 16,
       "ecartees_titre": 0,
       "plafonds": 0,
@@ -170,11 +170,11 @@
     "ifyoucould": {
       "requetes": 1,
       "erreurs": 0,
-      "offres": 60,
+      "offres": 58,
       "echec_total": false,
       "note": "",
-      "titres_examines": 60,
-      "titres_retenus": 2,
+      "titres_examines": 58,
+      "titres_retenus": 1,
       "ecartees_titre": 0,
       "plafonds": 0,
       "plafond_detail": ""
@@ -194,7 +194,7 @@
     "dribbble": {
       "requetes": 1,
       "erreurs": 0,
-      "offres": 53,
+      "offres": 52,
       "echec_total": false,
       "note": "",
       "titres_examines": 1,
@@ -205,34 +205,29 @@
     }
   },
   "verification_en_ligne": {
-    "fichier": "data/offres/offres_2026-11-18.json",
-    "verifiees": 146,
-    "actives": 47,
+    "fichier": "data/offres/offres_2026-11-19.json",
+    "verifiees": 18,
+    "actives": 14,
     "fermees_retirees": 0,
-    "non_verifiables_conservees": 99,
+    "non_verifiables_conservees": 4,
     "par_site": {
       "bof": {
-        "inconnu": 80
+        "inconnu": 3
       },
       "fashionjobs": {
-        "active": 4
+        "active": 1
       },
       "hellowork": {
         "active": 3
       },
       "indeed": {
-        "inconnu": 13
+        "inconnu": 1
       },
       "linkedin": {
-        "active": 33,
-        "inconnu": 5
-      },
-      "profilculture": {
-        "active": 1
+        "active": 9
       },
       "welcome_to_the_jungle": {
-        "active": 6,
-        "inconnu": 1
+        "active": 1
       }
     }
   }
